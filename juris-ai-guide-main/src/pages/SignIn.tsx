@@ -5,53 +5,65 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { LogIn, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
 import { useToast } from '@/components/ui/use-toast';
-import { useNavigate,Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const SignIn = () => {
-    const navigate = useNavigate();
-    const {toast} = useToast();
+  const navigate = useNavigate();
+  const { toast } = useToast();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     // Add your sign-in logic here
-    const formData = new FormData(e.currentTarget);
     try {
-        await fetch("http://localhost:5000/api/signIn",{
-            method: "POST",
-            body: JSON.stringify({
-                email: formData.get("email"),
-                password: formData.get("password"),
-            }),
-            headers: {
-                "Content-Type": "application/json",
-            },
+      await fetch("http://localhost:5000/api/signIn", {
+        method: "POST",
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then(async (res) => {
+          const data = await res.json(); // Parse the response body as JSON
+          if (res.ok) { // Check if the HTTP status code indicates success
+            toast({
+              title: "Success",
+              description: data.message, // Use the parsed data
+              variant: "default",
+            });
+            setTimeout(() => navigate("/"), 1000);
+          } else {
+            toast({
+              title: "Error",
+              description: data.message || "An error occurred.", // Handle missing message
+              variant: "destructive",
+            });
+          }
         })
-        .then((res) => {
-            if (res.status === 200) {
-                toast({
-                    title: "Success",
-                    description:res.data.message,
-                    variant: "default",
-                });
-                setTimeout(() => navigate("/"), 1000);
-            } else {
-                toast({
-                    title: "Error",
-                    description: res.data.message,
-                    variant: "destructive",
-                });
-            }
-        })
-    } catch (error) {
-        console.error("Error signing in:", error);
-        toast({
+        .catch((error) => {
+          console.error("Error signing in:", error);
+          toast({
             title: "Error",
             description: "An error occurred while signing in. Please try again.",
             variant: "destructive",
+          });
         });
+    } catch (error) {
+      console.error("Error signing in:", error);
+      toast({
+        title: "Error",
+        description: "An error occurred while signing in. Please try again.",
+        variant: "destructive",
+      });
     }
     setTimeout(() => setLoading(false), 1000);
   };
@@ -78,6 +90,8 @@ const SignIn = () => {
                 placeholder="m@example.com"
                 type="email"
                 className="pl-9"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 required
               />
             </div>
@@ -90,6 +104,9 @@ const SignIn = () => {
                 id="password"
                 type={showPassword ? "text" : "password"}
                 className="pl-9 pr-9"
+                placeholder='Password'
+                value={formData.password}
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 required
               />
               <button
@@ -112,7 +129,7 @@ const SignIn = () => {
           </Button>
           <p className="text-sm text-center text-muted-foreground">
             Don't have an account?{" "}
-            <Link href="/signup" className="text-primary hover:underline">
+            <Link to="/signup" className="text-primary hover:underline">
               Sign up
             </Link>
           </p>
