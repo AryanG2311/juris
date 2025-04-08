@@ -5,7 +5,7 @@ const router = express.Router();
 const genAI = new GoogleGenerativeAI('AIzaSyBADA4B7gfQPWheKtDvVdYEIlUgXATgd4E');
 const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
-router.post('/', async (req, res) => {
+router.post('/chat', async (req, res) => {
   const { query, context, history } = req.body;
   
   if (!query) return res.status(400).json({ reply: 'Query is missing.' });

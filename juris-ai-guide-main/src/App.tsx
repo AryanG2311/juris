@@ -17,6 +17,8 @@ import ContractAnalyzer from "./pages/ContractAnalyzer";
 import AILawyer from "./pages/AILawyer";
 import SchemeRecommender from "./pages/SchemeRecommender";
 import ContractComparisonPage from "./pages/contractComparisonPage";
+import SignUp from "./pages/SignUp";
+import SignIn from "./pages/SignIn";
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -64,6 +66,8 @@ const App = () => {
             <Route path="/ai-lawyer" element={<AILawyer />} />
             <Route path="/scheme-recommender" element={<SchemeRecommender />} />
             <Route path="/contract-comparison" element={<ContractComparisonPage />} />
+            <Route path="/signUp" element={<SignUp />} />
+            <Route path="/signIn" element={<SignIn />} />
             {/* ADD ALL CUSTOM ROUTES BELOW THE CATCH-ALL "*" ROUTE */}
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

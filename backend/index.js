@@ -3,12 +3,20 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import geminiRoutes from './routes/gemini.js';
+import cookieParser from 'cookie-parser';
+import signUpRouter from './routes/signUp.js';
+import signInRouter from './routes/signIn.js';
+import signOutRouter from './routes/signOut.js';
+import getUserDetailRoute from './routes/getUser.js';
+
 const app = express();
 app.use(cors());
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+dotenv.config();
 
-const MONGO_URI = process.env.MONGO_URI || '';  
+const MONGO_URI = process.env.MONGO_URI || 'mongodb+srv://anumaancs:pagal@gdg.g5f6w.mongodb.net/?retryWrites=true&w=majority&appName=GDG';  
 
 
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -17,12 +25,15 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 
 
 
-dotenv.config();
 
 
 
 //routes
 app.use('/api/gemini', geminiRoutes);
+app.use("/api/signUp",signUpRouter);
+app.use("/api/signIn",signInRouter);
+app.use("/api/signOut",signOutRouter);
+app.use("/api/getUserDetail",getUserDetailRoute);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
