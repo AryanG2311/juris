@@ -12,7 +12,7 @@ router.post("/",async (req,res) => {
             return res.status(400).json({success:false,message:"Please provide all field"});
         }
 
-        const userExist = await userModel.findOne({usernmae:username,email:email});
+        const userExist = await userModel.findOne({username:username,email:email});
 
         if(userExist){
             return res.status(400).json({success:false,message:"User already exist"});

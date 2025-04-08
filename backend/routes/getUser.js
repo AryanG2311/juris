@@ -22,3 +22,5 @@ router.get("/",verifyUser,async (req, res) => {
         return res.status(500).json({success:false,message: "Something went wrong in getting user details"});
     }
 });
+
+export default router;

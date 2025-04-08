@@ -4,54 +4,67 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { UserPlus, Mail, Lock, Eye, EyeOff } from 'lucide-react';
-import { useNavigate,Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useToast } from '@/components/ui/use-toast';
 
 const SignUp = () => {
-    const { toast } = useToast();
-    const navigate = useNavigate();
+  const { toast } = useToast();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const formData = new FormData(e.currentTarget);
     try {
-        await fetch("http://localhost:5000/api/signUp",{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify({
-                username: formData.get("username"),
-                email: formData.get("email"),
-                password: formData.get("password")
-            })
+      await fetch("http://localhost:5000/api/signUp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: formData.username,
+        email: formData.email,
+        password: formData.password,
+        }),
+      })
+        .then(async (res) => {
+          const data = await res.json(); // Parse the response body as JSON
+          if (res.ok) { // Use res.ok to check for successful status codes (200-299)
+            toast({
+              title: "Success",
+              description: data.message,
+              variant: "default",
+            });
+            setTimeout(() => navigate("/signIn"), 1000);
+          } else {
+            toast({
+              title: "Error",
+              description: data.message || "An error occurred",
+              variant: "destructive",
+            });
+          }
         })
-        .then((res) => {
-            if (res.status === 200) {
-                toast({
-                    title: "Success",
-                    description:res.data.message,
-                    variant: "default",
-                });
-                setTimeout(() => navigate("/signIn"), 1000);
-            } else {
-                toast({
-                    title: "Error",
-                    description: res.data.message,
-                    variant: "destructive",
-                });
-            }    
-        })
-    } catch (error) {
-        console.log(error);
-        toast({
+        .catch((error) => {
+          console.error("Error:", error);
+          toast({
             title: "Error",
-            description: "Something went wrong",
+            description: "Something went wrong. Please try again.",
             variant: "destructive",
+          });
         });
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Error",
+        description: "Something went wrong",
+        variant: "destructive",
+      });
     }
     setTimeout(() => setLoading(false), 1000);
   };
@@ -69,7 +82,7 @@ const SignUp = () => {
       </CardHeader>
       <form onSubmit={handleSubmit}>
         <CardContent className="space-y-4">
-        <div className="space-y-2">
+          <div className="space-y-2">
             <Label htmlFor="username">Username</Label>
             <div className="relative">
               <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
@@ -78,6 +91,8 @@ const SignUp = () => {
                 placeholder="username"
                 type="text"
                 className="pl-9"
+                value={formData.username}
+                onChange={(e) => setFormData({ ...formData, username: e.target.value })}
                 required
               />
             </div>
@@ -91,6 +106,8 @@ const SignUp = () => {
                 placeholder="m@example.com"
                 type="email"
                 className="pl-9"
+                value={formData.email}
+                onChange={(e) => setFormData({...formData, email: e.target.value})}
                 required
               />
             </div>
@@ -103,6 +120,9 @@ const SignUp = () => {
                 id="password"
                 type={showPassword ? "text" : "password"}
                 className="pl-9 pr-9"
+                placeholder="password"
+                value={formData.password}
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 required
               />
               <button
@@ -125,7 +145,7 @@ const SignUp = () => {
           </Button>
           <p className="text-sm text-center text-muted-foreground">
             Already have an account?{" "}
-            <Link href="/signIn" className="text-primary hover:underline">
+            <Link to="/signIn" className="text-primary hover:underline">
               Sign in
             </Link>
           </p>

@@ -19,7 +19,7 @@ dotenv.config();
 const MONGO_URI = process.env.MONGO_URI || 'mongodb+srv://anumaancs:pagal@gdg.g5f6w.mongodb.net/?retryWrites=true&w=majority&appName=GDG';  
 
 
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true,serverSelectionTimeoutMS: 20000 })
   .then(() => console.log("MongoDB Connected"))
   .catch(err => console.error("MongoDB Connection Error:", err));
 
