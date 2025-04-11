@@ -19,6 +19,7 @@ import SchemeRecommender from "./pages/SchemeRecommender";
 import ContractComparisonPage from "./pages/contractComparisonPage";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
+import MembershipPage from "./pages/JOIN";
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -68,6 +69,7 @@ const App = () => {
             <Route path="/contract-comparison" element={<ContractComparisonPage />} />
             <Route path="/signUp" element={<SignUp />} />
             <Route path="/signIn" element={<SignIn />} />
+            <Route path="/join" element={<MembershipPage/>} />
             {/* ADD ALL CUSTOM ROUTES BELOW THE CATCH-ALL "*" ROUTE */}
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

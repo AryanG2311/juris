@@ -13,3 +13,4 @@ export const getGeminiResponse = async (query: string): Promise<string> => {
     }
   };
   
+  

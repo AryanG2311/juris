@@ -55,7 +55,7 @@ const ChatInterface = () => {
     setIsSending(true);
 
     try {
-      const res = await fetch('http://localhost:5000/api/gemini', {
+      const res = await fetch('http://localhost:5000/api/Ailawyer/gem', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query: input })

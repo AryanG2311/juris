@@ -22,9 +22,9 @@ const navigate = useNavigate();
               <Button onClick={()=>{navigate("/contract-analyzer")}} size="lg" className="bg-white text-juris-primary hover:bg-juris-accent-100 font-bold">
                 Analyze Now
                 <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-              <Button onClick={()=>{navigate("/ai-lawyer")}} size="lg" className="bg-white text-juris-primary hover:bg-gray-100 font-bold">
-                chat Now
+              </Button> 
+              <Button onClick={()=>{navigate("/join")}} size="lg" className="bg-white text-juris-primary hover:bg-gray-100 font-bold">
+                Join Now
               </Button>
             </div>
             <p className="mt-6 text-sm text-gray-300">

@@ -3,10 +3,8 @@ from flask_cors import CORS
 import PyPDF2
 import google.generativeai as genai
 from transformers import AutoTokenizer, AutoModelForMaskedLM, pipeline
-import torch
 import json
 import re
-import os
 import nltk
 from nltk.tokenize import sent_tokenize, word_tokenize
 import spacy

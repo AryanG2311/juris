@@ -8,6 +8,7 @@ import signUpRouter from './routes/signUp.js';
 import signInRouter from './routes/signIn.js';
 import signOutRouter from './routes/signOut.js';
 import getUserDetailRoute from './routes/getUser.js';
+import AilawyerRoute from './routes/Ailawyer.js';
 
 const app = express();
 app.use(cors());
@@ -34,6 +35,7 @@ app.use("/api/signUp",signUpRouter);
 app.use("/api/signIn",signInRouter);
 app.use("/api/signOut",signOutRouter);
 app.use("/api/getUserDetail",getUserDetailRoute);
+app.use("/api/Ailawyer",AilawyerRoute);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

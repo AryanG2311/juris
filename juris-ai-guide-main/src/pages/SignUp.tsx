@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { UserPlus, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useToast } from '@/components/ui/use-toast';
+import Header from '@/components/Header';
 
 const SignUp = () => {
   const { toast } = useToast();
@@ -70,7 +71,10 @@ const SignUp = () => {
   };
 
   return (
-    <Card className="w-[400px] shadow-xl">
+   <>
+   <Header />
+   <div className='w-full h-full flex flex-col justify- items-center p-4'>
+   <Card className="w-[400px] shadow-xl">
       <CardHeader className="space-y-1">
         <div className="flex items-center justify-center mb-4">
           <UserPlus className="h-10 w-10 text-primary" />
@@ -152,6 +156,8 @@ const SignUp = () => {
         </CardFooter>
       </form>
     </Card>
+   </div>
+   </>
   );
 }
 
